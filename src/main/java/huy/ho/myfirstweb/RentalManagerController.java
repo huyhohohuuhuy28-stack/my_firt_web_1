@@ -99,6 +99,10 @@ public class RentalManagerController {
     private final VehicleManager vehicleManager = new VehicleManager();
     private final VehicleDataService vehicleDataService;
 
+    static List<RentalContract> getContractList() {
+        return List.copyOf(contractList);
+    }
+
     public RentalManagerController(VehicleDataService vehicleDataService) {
         this.vehicleDataService = vehicleDataService;
         this.vehicleDataService.load(vehicleManager);
