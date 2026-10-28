@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Sửa xe</title>
+      <link
+         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+         rel="stylesheet"
+      />
+   </head>
+   <body class="bg-light">
+      <nav class="navbar navbar-dark bg-primary">
+         <div class="container">
+            <a class="navbar-brand fw-bold" href="/">🚗 Rental Management</a>
+            <a class="btn btn-light" href="/vehicles">← Quản lý xe</a>
+         </div>
+      </nav>
+      <main class="container py-5">
+         <div class="row justify-content-center">
+            <div class="col-lg-8">
+               <div class="card shadow-sm border-0">
+                  <div class="card-body p-4">
+                     <h2 class="fw-bold mb-4">Sửa thông tin xeverte</h2>
+                     <div
+                        th:if="${error}"
+                        class="alert alert-danger"
+                        th:text="${error}"
+                     ></div>
+                     <form method="post" action="/vehicles/edit">
+                        <input
+                           type="hidden"
+                           name="licensePlate"
+                           th:value="${vehicle.licensePlate}"
+                        />
+                        <div class="row g-3">
+                           <div class="col-md-6">
+                              <label class="form-label">Biển số</label>
+                              <input
+                                 class="form-control"
+                                 th:value="${vehicle.licensePlate}"
+                                 disabled
+                              />
+                           </div>
+                           <div class="col-md-6">
+                              <label class="form-label">Loại xe</label>
+                              <input
+                                 class="form-control"
+                                 th:value="${isCar ? 'Ô tô' : 'Xe tải'}"
+                                 disabled
+                              />
+                           </div>
+                           <div class="col-md-6">
+                              <label class="form-label">Hãng xe</label>
+                              <select name="brand" class="form-select" required>
+                                 <option
+                                    th:each="b : ${brands}"
+                                    th:value="${b}"
+                                    th:text="${b}"
+                                    th:selected="${b == vehicle.brand}"
+                                 ></option>
+                              </select>
+                           </div>
+                           <div class="col-md-6">
+                              <label class="form-label">Năm sản xuất</label>
+                              <input
+                                 name="manufactureYear"
+                                 type="number"
+                                 min="1900"
+                                 class="form-control"
+                                 th:value="${vehicle.manufactureYear}"
+                                 required
+                              />
+                           </div>
+                           <div class="col-md-6">
+                              <label class="form-label">Giá thuê/ngày</label>
+                              <input
+                                 name="baseDailyPrice"
+                                 type="number"
+                                 min="1"
+                                 step="1000"
+                                 class="form-control"
+                                 th:value="${vehicle.baseDailyPrice}"
+                                 required
+                              />
+                           </div>
+                           <div class="col-md-6">
+                              <label class="form-label">Tình trạng xe</label>
+                              <select name="condition" class="form-select" required>
+                                 <option
+                                    th:each="condition : ${conditions}"
+                                    th:value="${condition}"
+                                    th:text="${condition}"
+                                    th:selected="${condition == vehicle.condition}"
+                                 ></option>
+                              </select>
+                           </div>
+                           <div class="col-md-6" th:if="${isCar}">
+                              <label class="form-label">Số chỗ</label>
+                              <input
+                                 name="numberOfSeats"
+                                 type="number"
+                                 min="1"
+                                 class="form-control"
+                                 th:value="${vehicle.numberOfSeats}"
+                                 required
+                              />
+                           </div>
+                           <div class="col-md-6" th:unless="${isCar}">
+                              <label class="form-label">Tải trọng (tấn)</label>
+                              <input
+                                 name="payload"
+                                 type="number"
+                                 min="0.1"
+                                 step="0.1"
+                                 class="form-control"
+                                 th:value="${vehicle.payload}"
+                                 required
+                              />
+                           </div>
+                        </div>
+                        <div class="mt-4 d-flex gap-2">
+                           <button class="btn btn-primary">Lưu thay đổi</button
+                           ><a href="/vehicles" class="btn btn-secondary"
+                              >Hủy</a
+                           >
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </main>
+   </body>
+</html>

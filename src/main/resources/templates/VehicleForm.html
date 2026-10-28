@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${pageTitle != null ? pageTitle : 'Thêm xe mới'}">Thêm xe mới</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">🚗 Quản lý thuê xe</a>
+            <div class="navbar-nav">
+                <a class="nav-link" th:href="@{/vehicles}">Quản lý xe</a>
+                <a class="nav-link" th:href="@{/customers}">Người sử dụng</a>
+            </div>
+        </div>
+    </nav>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 th:text="${pageTitle != null ? pageTitle : 'Thêm xe mới'}">Thêm xe mới</h3>
+                        
+                        <!-- Hiển thị thông báo thành công xanh lá -->
+                        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+                        <!-- Hiển thị thông báo lỗi nếu có -->
+                        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+                        <form th:action="@{/vehicles/add}" method="post">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Biển số *</label>
+                                    <input class="form-control" name="licensePlate" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Hãng xe *</label>
+                                    <input class="form-control" name="brand" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Năm sản xuất *</label>
+                                    <input type="number" class="form-control" name="manufactureYear" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Giá thuê/ngày *</label>
+                                    <input type="number" step="1000" class="form-control" name="baseDailyPrice" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Tình trạng xe *</label>
+                                    <select class="form-select" name="condition" required>
+                                        <option th:each="condition : ${conditions}"
+                                                th:value="${condition}"
+                                                th:text="${condition}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Loại xe *</label>
+                                    <select class="form-select" name="type" id="type">
+                                        <option value="CAR">Ô tô</option>
+                                        <option value="TRUCK">Xe tải</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3" id="seatBox">
+                                    <label class="form-label">Số chỗ *</label>
+                                    <input type="number" class="form-control" name="numberOfSeats">
+                                </div>
+                                <div class="col-md-6 mb-3" id="payloadBox">
+                                    <label class="form-label">Tải trọng (tấn) *</label>
+                                    <input type="number" step="0.1" class="form-control" name="payload">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success">Lưu xe</button>
+                            <a class="btn btn-secondary ms-2" th:href="@{/vehicles}">Hủy</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggle() { 
+            let truck = document.getElementById('type').value === 'TRUCK'; 
+            document.getElementById('seatBox').style.display = truck ? 'none' : ''; 
+            document.getElementById('payloadBox').style.display = truck ? '' : 'none';
+        } 
+        document.getElementById('type').addEventListener('change', toggle); 
+        toggle();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+<!-- <!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${pageTitle}">Tạo Hợp Đồng Thuê Xe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">🚗 Quản lý thuê xe</a>
+            <div class="navbar-nav">
+                <a class="nav-link" th:href="@{/vehicles}">Quản lý xe</a>
+                <a class="nav-link" th:href="@{/customers}">Người sử dụng</a>
+                <a class="nav-link active" th:href="@{/RentalManager}">Hợp đồng thuê xe</a>
+            </div>
+        </div>
+    </nav>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 th:text="${pageTitle}">Tạo Hợp Đồng Thuê Xe</h3>
+
+                    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+                    <form th:action="@{/RentalManager/add}" method="post">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tên khách hàng *</label>
+                                <input class="form-control" name="customerName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Biển số xe *</label>
+                                <input class="form-control" name="licensePlate" required placeholder="VD: 51A-123.45">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Ngày thuê *</label>
+                                <input type="date" class="form-control" name="rentalDate" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Ngày trả dự kiến *</label>
+                                <input type="date" class="form-control" name="expectedReturnDate" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tổng chi phí (VNĐ) *</label>
+                                <input type="number" step="1000" class="form-control" name="totalPrice" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">Lưu hợp đồng</button>
+                        <a class="btn btn-secondary ms-2" th:href="@{/RentalManager}">Quay lại</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${pageTitle}">Tạo Hợp Đồng Thuê Xe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">🚗 Quản lý thuê xe</a>
+            <div class="navbar-nav">
+                <a class="nav-link" th:href="@{/vehicles}">Quản lý xe</a>
+                <a class="nav-link" th:href="@{/customers}">Người sử dụng</a>
+                <a class="nav-link active" th:href="@{/RentalManager}">Hợp đồng thuê xe</a>
+            </div>
+        </div>
+    </nav>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 th:text="${pageTitle}">Tạo Hợp Đồng Thuê Xe</h3>
+
+                    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+                    <form th:action="@{/RentalManager/add}" method="post">
+                        <div class="row">
+                            <!-- Dropdown chọn Khách hàng -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Chọn Khách hàng *</label>
+                                <select class="form-select" name="customerName" required>
+                                    <option value="" disabled selected>-- Chọn khách hàng --</option>
+                                    <option th:each="c : ${customers}" 
+                                            th:value="${c.name}" 
+                                            th:text="${c.name + ' (' + c.phone + ')'}"></option>
+                                </select>
+                            </div>
+
+                            <!-- Dropdown chọn Xe đang sẵn sàng -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Chọn Xe sẵn sàng *</label>
+                                <select class="form-select" name="licensePlate" required>
+                                    <option value="" disabled selected>-- Chọn xe --</option>
+                                    <option th:each="v : ${vehicles}" 
+                                            th:value="${v.licensePlate}" 
+                                            th:text="${v.licensePlate + ' - ' + v.brand + ' (' + #numbers.formatDecimal(v.baseDailyPrice, 0, 'COMMA', 0, 'POINT') + 'đ/ngày)'}"></option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Ngày thuê *</label>
+                                <input type="date" class="form-control" name="rentalDate" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Ngày trả dự kiến *</label>
+                                <input type="date" class="form-control" name="expectedReturnDate" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">Lưu hợp đồng</button>
+                        <a class="btn btn-secondary ms-2" th:href="@{/RentalManager}">Quay lại</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

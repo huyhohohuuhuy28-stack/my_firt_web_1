@@ -1,0 +1,63 @@
+<!-- <!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trang chủ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark mb-4">
+        <div class="container"><a class="navbar-brand" th:href="@{/}">🚗 Quản lý thuê xe</a>
+            <div class="navbar-nav"><a class="nav-link" th:href="@{/vehicles}">Quản lý xe</a><a class="nav-link"
+                    th:href="@{/customers}">Người sử dụng</a></div>
+        </div>
+    </nav>
+</head>
+
+<body>
+    <div class="container">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <h1>Hệ thống quản lý thuê xe</h1>
+            <p class="lead">Quản lý xe và người sử dụng trực tiếp trên website. Dữ liệu được lưu trong MySQL.</p>
+            <a class="btn btn-primary me-2" th:href="@{/vehicles}">🚙 Quản lý xe</a><a class="btn btn-success"
+                th:href="@{/customers}">👤 Quản lý người sử dụng</a>
+        </div>
+    </div>
+</body>
+
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trang chủ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">🚗 Quản lý thuê xe</a>
+            <div class="navbar-nav">
+                <a class="nav-link" th:href="@{/vehicles}">Quản lý xe</a>
+                <a class="nav-link" th:href="@{/customers}">Người sử dụng</a>
+                <a class="nav-link" th:href="@{/RentalManager}">Hợp đồng thuê xe</a>
+            </div>
+        </div>
+    </nav>
+</head>
+
+<body>
+    <div class="container">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <h1>Hệ thống quản lý thuê xe</h1>
+            <p class="lead">Quản lý xe, người sử dụng và hợp đồng thuê xe trực tiếp trên website.</p>
+            <a class="btn btn-primary me-2 mb-2" th:href="@{/vehicles}">🚙 Quản lý xe</a>
+            <a class="btn btn-success me-2 mb-2" th:href="@{/customers}">👤 Quản lý người sử dụng</a>
+            <a class="btn btn-warning me-2 mb-2 text-dark" th:href="@{/RentalManager}">📝 Quản lý hợp đồng</a>
+        </div>
+    </div>
+</body>
+
+</html>

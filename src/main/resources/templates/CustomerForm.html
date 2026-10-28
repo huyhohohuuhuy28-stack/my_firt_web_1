@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${pageTitle}">Người sử dụng</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark mb-4">
+        <div class="container"><a class="navbar-brand" th:href="@{/}">🚗 Quản lý thuê xe</a>
+            <div class="navbar-nav"><a class="nav-link" th:href="@{/vehicles}">Quản lý xe</a><a class="nav-link"
+                    th:href="@{/customers}">Người sử dụng</a></div>
+        </div>
+    </nav>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 th:text="${pageTitle}"></h3>
+                        <form th:action="@{/customers/save}" th:object="${customer}" method="post"><input type="hidden"
+                                th:field="*{id}">
+                            <div class="mb-3"><label class="form-label">Họ và tên *</label><input class="form-control"
+                                    th:field="*{name}" required></div>
+                            <div class="mb-3"><label class="form-label">Số điện thoại *</label><input
+                                    class="form-control" th:field="*{phone}" required></div>
+                            <div class="mb-3"><label class="form-label">Email</label><input type="email"
+                                    class="form-control" th:field="*{email}"></div>
+                            <!-- <div class="mb-3"><label class="form-label">Địa chỉ</label><input class="form-control"
+                                    th:field="*{address}"></div> -->
+                            <button class="btn btn-success">Lưu vào database</button><a class="btn btn-secondary ms-2"
+                                th:href="@{/customers}">Hủy</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

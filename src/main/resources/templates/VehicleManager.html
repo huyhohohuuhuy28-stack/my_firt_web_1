@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Quản lý xe</title>
+      <link
+         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+         rel="stylesheet"
+      />
+      <nav class="navbar navbar-expand-lg bg-dark navbar-dark mb-4">
+         <div class="container">
+            <a class="navbar-brand" th:href="@{/}">🚗 Quản lý thuê xe</a>
+            <div class="navbar-nav">
+               <a class="nav-link" th:href="@{/vehicles}">Quản lý xe</a>
+               <a class="nav-link" th:href="@{/customers}">Người sử dụng</a>
+            </div>
+         </div>
+      </nav>
+   </head>
+   <body>
+      <div class="container">
+         <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Danh sách xe</h2>
+            <a class="btn btn-primary" th:href="@{/vehicles/add}">+ Thêm xe</a>
+         </div>
+         <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+               <thead class="table-dark">
+                  <tr>
+                     <th>ID</th>
+                     <th>Biển số</th>
+                     <th>Hãng</th>
+                     <th>Năm</th>
+                     <th>Giá/ngày</th>
+                     <th>Chi tiết</th>
+                     <th>Tình trạng xe</th>
+                     <th>Trạng thái</th>
+                     <th>Thao tác</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <!-- Dùng 'stat' để tự động tạo STT / ID -->
+                  <tr th:each="v, stat : ${vehicles}">
+                     <!-- Tự động tăng ID: XE01, XE02, XE03... -->
+                     <td th:text="${'XE' + #numbers.formatInteger(stat.count, 2)}"></td>
+                     <td th:text="${v.licensePlate}"></td>
+                     <td th:text="${v.brand}"></td>
+                     <td th:text="${v.manufactureYear}"></td>
+                     <td th:text="${#numbers.formatDecimal(v.baseDailyPrice, 0, 'COMMA', 0, 'POINT')} + ' đ'"></td>
+                     <td>
+                        <span th:if="${v.class.simpleName == 'Car'}" th:text="${v.numberOfSeats + ' chỗ'}"></span>
+                        <span th:if="${v.class.simpleName == 'Truck'}" th:text="${v.payload + ' tấn'}"></span>
+                     </td>
+                     <td th:text="${v.condition}"></td>
+                     <td>
+                        <span
+                           class="badge"
+                           th:classappend="${v.isAvailable ? 'text-bg-success' : 'text-bg-danger'}"
+                           th:text="${v.isAvailable ? 'Sẵn sàng' : 'Đang thuê'}"
+                        ></span>
+                     </td>
+                     <td class="text-nowrap">
+                        <a
+                           class="btn btn-sm btn-warning"
+                           th:href="@{/vehicles/edit/{id}(id=${v.licensePlate})}"
+                           >Sửa</a
+                        >
+                        <form
+                           th:action="@{/vehicles/delete}"
+                           method="post"
+                           class="d-inline"
+                           onsubmit="return confirm('Bạn có chắc muốn xóa xe này?')"
+                        >
+                           <input
+                              type="hidden"
+                              name="licensePlate"
+                              th:value="${v.licensePlate}"
+                           />
+                           <button type="submit" class="btn btn-sm btn-danger">
+                              Xóa
+                           </button>
+                        </form>
+                     </td>
+                  </tr>
+                  <tr th:if="${#lists.isEmpty(vehicles)}">
+                     <td colspan="9" class="text-center">Chưa có xe.</td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </body>
+</html>
